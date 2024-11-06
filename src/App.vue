@@ -1,27 +1,33 @@
-<script setup>
-</script>
-
 <template>
   <div id="app">
-    <router-view />
+    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
+    <router-view></router-view>
   </div>
 </template>
 
-<style scoped lang="scss">
+<script>
+
+export default {
+  name: 'App',
+  components: {
+    // DataV
+  }
+}
+</script>
+
+<style>
 * {
   padding: 0;
   margin: 0;
-  text-decoration: none;
 }
-
+body {
+  background: #060612;
+}
 #app {
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  padding: 0;
-  max-width: 100vw;
-  width: 100%;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #BCBCBF;
 }
 </style>
