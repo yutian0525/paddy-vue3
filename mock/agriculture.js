@@ -98,7 +98,7 @@ module.exports = [
           greeningRate: Random.float(90, 95, 0, 9),
           greeningRateIncr: Random.integer(-10, 10),
           agriculturalPopulation: Random.integer(3000, 4000),
-          agriculturalPopulationIncr: Random.integer(-100, 100),
+          agriculturalPopulationIncr: Random.integer(0, 100),
           mechanizationRate: Random.float(1, 5, 0, 9),
           mechanizationRateIncr: Random.integer(-10, 10),
           agriculturalImports: Random.integer(6000, 8000),

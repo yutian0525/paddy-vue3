@@ -73,8 +73,8 @@
                       <!-- 农业人口 -->
                       <basic-data-item-label
                         label="农业人口"
-                        :config="defaultDataConfig.noInFectCount"
-                        :inCrValue="basicData.noInFectIncr"
+                        :config="basicData.agriculturalPopulationIncr"
+                        :inCrValue="basicData.agriculturalPopulation"
                       />
                       <!-- 机械化率 -->
                       <basic-data-item-label
