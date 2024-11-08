@@ -5,9 +5,9 @@
         <div class="grid-content bg-purple">
           <div class="left">
 <!--            <button class="btn btn&#45;&#45;stripe">数字大屏</button>-->
-            <button class="choosed">数字大屏</button>
-            <button class="btn btn--stripe">科普站</button>
-            <button class="btn btn--stripe">智慧检测</button>
+            <button :class="(path === '/') ?'choosed' : 'btn btn--stripe'" @click="goto('/')">数字大屏</button>
+            <button :class="(path === '/knowledge') ?'choosed' : 'btn btn--stripe'" @click="goto('/knowledge')">科普站</button>
+            <button :class="(path === '/predict') ?'choosed' : 'btn btn--stripe'" @click="goto('/predict')">智慧检测</button>
           </div>
         </div>
       </el-col>
@@ -21,11 +21,13 @@
       <el-col :span="8">
         <div class="grid-content bg-purple">
           <div class="right">
+            <div class="place"  @click="goto('/login')">
             <div class="name">
               <div class="username">Yutian</div>
               <div class="role">个人用户</div>
             </div>
             <el-avatar class="avatar" :size="50" src="https://mypan.yutiantian.top/raw/health/11.jpg" />
+            </div>
           </div>
         </div>
       </el-col>
@@ -39,10 +41,14 @@ export default {
   },
   data() {
     return {
-
+      path:"/"
     }
   },
   methods: {
+    goto(p){
+      this.$router.push({path: p})
+      this.path = p
+    }
 
   },
   created() {
@@ -103,34 +109,40 @@ export default {
 
   }
   .right{
+    .place{
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      .avatar{
+        margin-right: 10px;
+      }
+      .name{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-end;
+        color: #fff;
+        font-size: 14px;
+        margin-right: 15px;
+        line-height: 24px;
+        //margin-right: 10px;
+        .username{
+          font-weight: bold;
+          font-size: 22px;
+        }
+        .role{
+          font-size: 14px;
+          color: #bcbcbc;
+        }
+      }
+    }
     width: 100%;
     //background-color: #29bfff;
     height: 60px;
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    .avatar{
-      margin-right: 10px;
-    }
-    .name{
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: flex-end;
-      color: #fff;
-      font-size: 14px;
-      margin-right: 15px;
-      line-height: 24px;
-      //margin-right: 10px;
-      .username{
-        font-weight: bold;
-        font-size: 22px;
-      }
-      .role{
-        font-size: 14px;
-        color: #bcbcbc;
-      }
-    }
+
   }
   .bg-purple {
     //background: #dbe2ef;
