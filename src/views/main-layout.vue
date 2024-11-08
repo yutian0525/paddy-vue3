@@ -2,14 +2,14 @@
   <div class="container">
     <!-- 顶部 -->
     <div class="top-header">
-      <div class="title">
-        <h1>{{ title }}</h1>
-        <div class="top-header-tip">
-          <div class="last-update-time">
-            更新时间：{{ timestampToTime()}}
-          </div>
-        </div>
-      </div>
+<!--      <div class="title">-->
+<!--        <h1>{{ title }}</h1>-->
+<!--        <div class="top-header-tip">-->
+<!--          <div class="last-update-time">-->
+<!--            更新时间：{{ timestampToTime()}}-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
     </div>
     <div class="main-content">
       <el-row>
@@ -214,7 +214,7 @@
     </div>
   </div>
 </template>
-<script>
+<script >
 import ChartCard from '../components/ChartCard'
 import DataMap from '../components/DataMap'
 import CuredAndDeadRateChart from '../components/CuredAndDeadRateChart'
@@ -224,6 +224,8 @@ import ProvinceRankingBarChart from '../components/ProvinceRankingBarChart'
 import CurrentConfirmedCompareBarChart from '../components/CurrentConfirmedCompareBarChart'
 import BasicProportionChart from '../components/BasicProportionChart'
 import AgricultureService from '../api/AgriculturData'
+import topBar from '../components/topBar/topBar.vue'
+
 
 const formatter = (number) => {
   const numbers = number.toString().split('').reverse()

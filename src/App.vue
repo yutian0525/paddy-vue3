@@ -1,5 +1,12 @@
 <template>
   <div id="app">
+    <el-header>
+      <topBar>
+        <template v-slot:middle>
+          <div></div>
+        </template>
+      </topBar>
+    </el-header>
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
     <router-view></router-view>
   </div>
@@ -7,9 +14,12 @@
 
 <script>
 
+import TopBar from "./components/topBar/topBar.vue";
+
 export default {
   name: 'App',
   components: {
+    TopBar
     // DataV
   }
 }

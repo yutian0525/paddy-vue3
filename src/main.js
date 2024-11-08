@@ -9,7 +9,7 @@ import VueRouter from 'vue-router'
 import router from './router/index'
 
 import { 
-  Icon, Row, Col,  Table, TableColumn, Button, Dialog, Link
+  Icon, Row, Col,  Table, TableColumn, Button, Dialog, Link, Avatar
 } from 'element-ui';
 
 if (process.env.NODE_ENV === 'development') {
@@ -23,6 +23,7 @@ Vue.config.productionTip = false
 Vue.use(dataV)
 Vue.prototype.axios = axios
 Vue.use(Icon)
+Vue.use(Avatar)
 Vue.use(Row)
 Vue.use(Col)
 Vue.use(Table)
