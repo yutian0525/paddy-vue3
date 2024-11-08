@@ -22,11 +22,11 @@ export default {
       this.setOptions()
     },
     setOptions() {
-      let curedRateData = [this.data.curedRate, this.data.curedRate, this.data.curedRate];
-      let deadRateData = [this.data.deadRate, this.data.deadRate, this.data.deadRate]
+      let soldratedata = [this.data.SoldRate, this.data.SoldRate, this.data.SoldRate];
+      let storeratedata = [this.data.StoredRate, this.data.StoredRate, this.data.StoredRate];
       let option = {
         title: [{
-          text: (this.data.curedRate * 100).toFixed(2) + '{a|%}',
+          text: (this.data.SoldRate).toFixed(2) + '{a|%}',
           textStyle: {
             fontSize: 20,
             fontFamily: 'Microsoft Yahei',
@@ -41,7 +41,7 @@ export default {
           x: '20px',
           y: '30%'
         },{
-          text: (this.data.deadRate * 100).toFixed(2) + '{a|%}',
+          text: (this.data.StoredRate).toFixed(2) + '{a|%}',
           textStyle: {
             fontSize: 20,
             fontFamily: 'Microsoft Yahei',
@@ -67,7 +67,7 @@ export default {
             top: 'middle',
             style: {
               fill: '#aab2fa',
-              text: '銷售率',
+              text: '销售率',
               font: '16px Microsoft YaHei'
             }
           }]
@@ -82,7 +82,7 @@ export default {
             top: 'middle',
             style: {
               fill: '#aab2fa',
-              text: '庫存率',
+              text: '库存率',
               font: '16px Microsoft YaHei'
             }
           }]
@@ -92,7 +92,7 @@ export default {
           radius: '80%',
           center: ['20%', '50%'],
           //  shape: 'roundRect',
-          data: curedRateData,
+          data: soldratedata,
           backgroundStyle: {
             color: {
               type: 'linear',
@@ -171,7 +171,7 @@ export default {
           radius: '80%',
           center: ['70%', '50%'],
           //  shape: 'roundRect',
-          data: deadRateData,
+          data: storeratedata,
           backgroundStyle: {
             color: {
               type: 'linear',

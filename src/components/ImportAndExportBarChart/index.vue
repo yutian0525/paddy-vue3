@@ -107,7 +107,7 @@ export default {
                 )
               }
             },
-            data: this.data.curedCountList
+            data: this.data.Importedcountlist
           },
           {
             name: '出口额',
@@ -128,7 +128,7 @@ export default {
               }
             },
             z: -12,
-            data: this.data.confirmedCountList
+            data: this.data.Exportedcountlist
           },
         ]
       }

@@ -44,8 +44,8 @@
     │  ├─BasicProportionChart            # 占比图表
     │  ├─BasicTrendChart                 # 趋势图表
     │  ├─ChartCard                       # 图表面板
-    │  ├─CuredAndDeadRateChart           # 治愈率和死亡率图表
-    │  ├─CurrentConfirmedCompareBarChart # 最近一周累计治愈图表
+    │  ├─StoreAndSoldChart           # 治愈率和死亡率图表
+    │  ├─ImportAndExportBarChart # 最近一周累计治愈图表
     │  ├─DataMap                         # 数据地图
     │  └─ProvinceRankingBarChart         # 累计排名图表
     ├─libs                               # 一些常用的配置

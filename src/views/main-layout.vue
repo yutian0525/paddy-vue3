@@ -21,11 +21,11 @@
               <el-row>
                 <el-col :span="7">
                   <chart-card
-                    title="各省粮食产量排名（TOP 10）"
+                    title="各省粮食产量排名（TOP 10）单位：万吨"
                     :customClass="`chart-item-bottom-sep`"
                   >
                     <province-ranking-bar-chart
-                      ref="topConfirmedCountRankChart"
+                      ref="topCountRankChart"
                       :data="top10ProvinceData"
                       style="width: 100%; height: 380px"
                     />
@@ -43,8 +43,8 @@
                   </chart-card>
                   <chart-card title="进出口额">
                     <current-confirmed-compare-bar-chart
-                      ref="confirmSingleBarChart"
-                      :data="confirmSingleBarChartData"
+                      ref="importandexportBarChart"
+                      :data="ImportAndExportChartData"
                       style="width: 100%; height: 310px"
                     />
                   </chart-card>
@@ -56,37 +56,37 @@
                     <div class="top-basic-info">
                       <basic-data-item-label
                         label="耕地面积"
-                        :config="defaultDataConfig.currentConfirmedCount"
-                        :inCrValue="basicData.currentConfirmedIncr"
+                        :config="defaultDataConfig.arableLandArea"
+                        :inCrValue="basicData.arableLandAreaIncr"
                       />
                       <basic-data-item-label
                         label="粮食总产量"
-                        :config="defaultDataConfig.confirmedCount"
-                        :inCrValue="basicData.confirmedIncr"
+                        :config="defaultDataConfig.totalGrainOutput"
+                        :inCrValue="basicData.totalGrainOutputIncr"
                       />
                       <!-- 绿化覆盖率 -->
                       <basic-data-item-label
                         label="绿化覆盖率"
-                        :config="defaultDataConfig.importedCount"
-                        :inCrValue="basicData.importedIncr"
+                        :config="defaultDataConfig.greeningRate"
+                        :inCrValue="basicData.greeningRateIncr"
                       />
                       <!-- 农业人口 -->
                       <basic-data-item-label
                         label="农业人口"
-                        :config="basicData.agriculturalPopulationIncr"
-                        :inCrValue="basicData.agriculturalPopulation"
+                        :config="defaultDataConfig.agriculturalPopulation"
+                        :inCrValue="basicData.agriculturalPopulationIncr"
                       />
                       <!-- 机械化率 -->
                       <basic-data-item-label
                         label="机械化率"
-                        :config="defaultDataConfig.curedCount"
+                        :config="defaultDataConfig.mechanizationRate"
                         :inCrValue="basicData.curedIncr"
                       />
                       <!-- 死亡人数 -->
                       <basic-data-item-label
                         label="农业进口"
-                        :config="defaultDataConfig.deadCount"
-                        :inCrValue="basicData.deadIncr"
+                        :config="defaultDataConfig.agriculturalImports"
+                        :inCrValue="basicData.agriculturalImportsIncr"
                       />
                     </div>
                     <!-- 顶部统计信息结束 -->
@@ -116,11 +116,11 @@
             <!-- 农作物销售与库存情况 -->
             <chart-card
               title="农作物销售与库存情况"
-              :innerClass="`cure-and-dead-rate-chart`"
+              :innerClass="`import-and-export-rate-chart`"
               :customClass="`chart-item-bottom-sep`"
             >
               <cured-and-dead-rate-chart
-                ref="cureRateChart"
+                ref="RateChart"
                 :data="rate"
                 title="销售率"
                 style="width: 280px; height: 130px"
@@ -128,8 +128,8 @@
             </chart-card>
             <chart-card title="水热变化" :customClass="`chart-item-bottom-sep`">
               <basic-trend-chart
-                :data="basicIncrTrendData"
-                ref="confirmedCountTrendChart"
+                :data="TemperatureAndPerData"
+                ref="temandperTrendChart"
                 style="width: 100%; height: 320px"
               />
             </chart-card>
@@ -167,61 +167,18 @@
             >（更新时间：{{ basicData.updateTime }}）</span
           >
         </div>
-        <div class="area-data-table-wrapper">
-          <el-table
-            class="area-data-table"
-            :data="provinceDataList"
-            style="width: 100%"
-          >
-            <el-table-column prop="provinceLabel" align="center" label="省份">
-            </el-table-column>
-            <el-table-column
-              prop="confirmedCount"
-              align="center"
-              label="累计确诊"
-            >
-            </el-table-column>
-            <el-table-column
-              prop="currentConfirmedCount"
-              align="center"
-              label="现有确诊"
-            >
-            </el-table-column>
-            <el-table-column prop="curedCount" align="center" label="累计治愈">
-            </el-table-column>
-            <el-table-column prop="deadCount" align="center" label="累计死亡">
-            </el-table-column>
-          </el-table>
-        </div>
       </el-dialog>
-      <!-- 关于弹窗 -->
-      <el-dialog
-        title="关于"
-        :visible.sync="aboutDialogVisible"
-        width="30%"
-        :before-close="aboutDialogClose"
-      >
-        <about />
-      </el-dialog>
-      <!-- 关于图标 -->
-      <div class="about-wraper">
-        <i
-          class="el-icon-info"
-          style="font-size: 30px"
-          @click="aboutDialogShowHandler"
-        ></i>
-      </div>
     </div>
   </div>
 </template>
 <script >
 import ChartCard from '../components/ChartCard'
 import DataMap from '../components/DataMap'
-import CuredAndDeadRateChart from '../components/CuredAndDeadRateChart'
-import BasicDataItemLabel from '../components/ImPorTAndExportLabel'
+import CuredAndDeadRateChart from '../components/StoreAndSoldChart'
+import BasicDataItemLabel from '../components/BasicData'
 import BasicTrendChart from '../components/BasicTrendChart'
 import ProvinceRankingBarChart from '../components/ProvinceRankingBarChart'
-import CurrentConfirmedCompareBarChart from '../components/CurrentConfirmedCompareBarChart'
+import ImportAndExportBarChart from '../components/ImportAndExportBarChart'
 import BasicProportionChart from '../components/BasicProportionChart'
 import AgricultureService from '../api/AgriculturData'
 import topBar from '../components/topBar/topBar.vue'
@@ -242,46 +199,46 @@ const getNumberStyle = (color = '#228B22', fontSize = 30, fontWeight = 'bolder')
   }
 }
 
-const initBasicConfig = (data = null) => {
-  let currentConfirmedCount = data ? [data.currentConfirmedCount] : 0
-  let confirmedCount = data ? [data.confirmedCount] : 0
-  let importedCount = data ? [data.importedCount] : 0
-  let noInFectCount = data ? [data.noInFectCount] : 0
-  let deadCount = data ? [data.deadCount] : 0
-  let curedCount = data ? [data.curedCount] : 0
+const initBasicConfig = (data) => {
+  let arableLandArea = data ? [data.arableLandArea] : 0
+  let totalGrainOutput = data ? [data.totalGrainOutput] : 0
+  let greeningRate = data ? [data.greeningRate] : 0
+  let agriculturalPopulation = data ? [data.agriculturalPopulation] : 0
+  let mechanizationRate = data ? [data.mechanizationRate] : 0
+  let agriculturalImports = data ? [data.agriculturalImports] : 0
   return {
-    confirmedCount: {
-      number: [confirmedCount],
+    totalGrainOutput: {
+      number: [totalGrainOutput],
       content: '{nt}',
       formatter,
       style: getNumberStyle()
     },
-    currentConfirmedCount: {
-      number: [currentConfirmedCount],
+    arableLandArea: {
+      number: [arableLandArea],
       content: '{nt}',
       formatter,
       style: getNumberStyle('#228B22')
     },
-    importedCount: {
-      number: [importedCount],
+    greeningRate: {
+      number: [greeningRate],
       content: '{nt}',
       formatter,
       style: getNumberStyle()
     },
-    noInFectCount: {
-      number: [noInFectCount],
+    agriculturalPopulation: {
+      number: [agriculturalPopulation],
       content: '{nt}',
       formatter,
       style: getNumberStyle()
     },
-    deadCount: {
-      number: [deadCount],
+    mechanizationRate: {
+      number: [mechanizationRate],
       content: '{nt}',
       formatter,
       style: getNumberStyle('#228B22')
     },
-    curedCount: {
-      number: [curedCount],
+    agriculturalImports: {
+      number: [agriculturalImports],
       content: '{nt}',
       formatter,
       style: getNumberStyle()
@@ -312,7 +269,7 @@ export default {
     BasicDataItemLabel,
     BasicTrendChart,
     ProvinceRankingBarChart,
-    CurrentConfirmedCompareBarChart,
+    CurrentConfirmedCompareBarChart: ImportAndExportBarChart,
     BasicProportionChart
   },
   data () {
@@ -370,19 +327,19 @@ export default {
         provinceList: [],
         valueList: []
       },
-      basicIncrTrendData: {
+      TemperatureAndPerData: {
         dateList: [],
         temperatureDataList: [],
         percipitationDataList: []
       },
-      confirmSingleBarChartData: {
+      ImportAndExportChartData: {
         dateList: [],
-        currentConfirmedCountList: [],
-        confirmedCountList: []
+        Importedcountlist: [],
+        Exportedcountlist: []
       },
       rate: {
-        curedRate: 0,
-        deadRate: 0
+        SoldRate: 0,
+        StoredRate: 0
       },
       areaData: {},
       mapDataList: []
@@ -407,7 +364,7 @@ export default {
           console.log('错误:' + res.info)
           return
         }
-        console.log('省份数据:', res.data)
+        /*console.log('省份数据:', res.data)*/
         self.provinceDataList = res.data
         self.setAreaChartData(res.data)
         self.setProvinceRankingData(res.data)
@@ -445,11 +402,12 @@ export default {
       let dateList = []
       let percipitationList = []
       let temperatureList = []
-      let count=7
+      let count = 7
       let sevenDayDateList = []
-      // 仅显示一周条数据
-      let confirmedCountList = []
-      let curedCountList = []
+      let exportedCountList = []
+      let importedCountList = []
+
+      // 解析 percipitationList 和 temperatureList
       for (let i = data.percipitationList.length - 1; i >= 0; i--) {
         dateList.push(data.percipitationList[i][0])
         percipitationList.push(data.percipitationList[i][1])
@@ -457,25 +415,35 @@ export default {
       for (let i = data.temperatureList.length - 1; i >= 0; i--) {
         temperatureList.push(data.temperatureList[i][1])
       }
-      
-      for (let i = count; i >= 0; i--) {
-        if (curedCountList.length >= count) {
-          break
-        }
-        curedCountList.push(data.curedCountList[i][1])
+
+      // 获取最近7天的日期
+      for (let i = 0; i < count && i < dateList.length; i++) {
+        sevenDayDateList.push(dateList[i])
       }
 
-      this.basicIncrTrendData = {
+      // 获取最近7天的 importedCountList 和 exportedCountList
+      for (let i = 0; i < count && i < data.importedCountList.length; i++) {
+        importedCountList.push(data.importedCountList[i][1])
+      }
+      for (let i = 0; i < count && i < data.exportedCountList.length; i++) {
+        exportedCountList.push(data.exportedCountList[i][1])
+      }
+
+      this.TemperatureAndPerData = {
         dateList: dateList,
         temperatureDataList: temperatureList,
         percipitationDataList: percipitationList,
       }
-      this.confirmSingleBarChartData = {
+      this.ImportAndExportChartData = {
         dateList: sevenDayDateList,
-        curedCountList: curedCountList,
-        confirmedCountList: confirmedCountList
+        Importedcountlist: importedCountList,
+        Exportedcountlist: exportedCountList,
       }
-    },
+
+      console.log('进口数据:', this.ImportAndExportChartData.Importedcountlist)
+      console.log('出口数据:', this.ImportAndExportChartData.Exportedcountlist)
+    }
+    ,
     setProvinceComfirmedCountBoardData (areaList) {
       let resultList = areaList.map(item => {
         return [item.provinceLabel, item.confirmedCount, item.curedCount, item.deadCount]
@@ -508,7 +476,7 @@ export default {
           value: item.precipitation
         }
       })
-      console.log('地图数据:', this.mapDataList)
+      /*console.log('地图数据:', this.mapDataList)*/
     },
     provinceTableDialogShowHandler () {
       this.provinceTableDialogVisible = true
@@ -526,8 +494,8 @@ export default {
       let config = initBasicConfig(data)
       this.defaultDataConfig = config
       this.rate = {
-        curedRate: data.curedRate / 100,
-        deadRate: data.deadRate / 100
+        SoldRate: data.soldrate,
+        StoredRate: data.storedrate
       }
     },
     startQueryData () {
@@ -537,10 +505,10 @@ export default {
     },
     initAllChart() {
       this.$refs.dataMap.initChart()
-      this.$refs.cureRateChart.initChart()
-      this.$refs.confirmedCountTrendChart.initChart()
-      this.$refs.topConfirmedCountRankChart.initChart()
-      this.$refs.confirmSingleBarChart.initChart()
+      this.$refs.RateChart.initChart()
+      this.$refs.temandperTrendChart.initChart()
+      this.$refs.topCountRankChart.initChart()
+      this.$refs.importandexportBarChart.initChart()
       this.$refs.basicProportionChart.initChart()
     },
     timestampToTime() {
@@ -649,7 +617,7 @@ h1 {
   padding-top: 10px;
   display: block;
 }
-.cure-and-dead-rate-chart {
+.import-and-export-rate-chart {
   display: flex;
   justify-content: space-around;
 }

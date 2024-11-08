@@ -55,12 +55,12 @@ const dateArray = generateDateRange(startDate, endDate);
 // 生成随机数据
 const generateRandomData = () => {
   const temperatureList = dateArray.map(date => [date, Random.integer(-40, 40)]);
-  const curedCountList = dateArray.map(date => [date, Random.integer(90000, 120000)]);
-  const confirmedCountList = dateArray.map(date => [date, Random.integer(100000, 120000)]);
+  const exportedCountList = dateArray.map(date => [date, Random.integer(90000, 120000)]);
+/*  const confirmedCountList = dateArray.map(date => [date, Random.integer(100000, 120000)]);*/
   const percipitationList = dateArray.map(date => [date, Random.integer(100, 1500)]);
   const importedCountList = dateArray.map(date => [date, Random.integer(5000, 7000)]);
-  const noInFectCountList = dateArray.map(date => [date, Random.integer(300, 500)]);
-  const currentConfirmedCountList = dateArray.map(date => [date, Random.integer(3000, 5000)]);
+ /* const noInFectCountList = dateArray.map(date => [date, Random.integer(300, 500)]);*/
+/*  const currentConfirmedCountList = dateArray.map(date => [date, Random.integer(3000, 5000)]);*/
 
   return {
     success: true,
@@ -68,12 +68,9 @@ const generateRandomData = () => {
     message: "操作成功",
     data: {
       temperatureList,
-      curedCountList,
-      confirmedCountList,
+      exportedCountList,
       percipitationList,
       importedCountList,
-      noInFectCountList,
-      currentConfirmedCountList
     }
   };
 };
@@ -103,6 +100,8 @@ module.exports = [
           mechanizationRateIncr: Random.integer(-10, 10),
           agriculturalImports: Random.integer(6000, 8000),
           agriculturalImportsIncr: Random.integer(-100, 100),
+          storedrate: Random.integer(0, 100),
+          soldrate: Random.integer(0, 100),
           updateTime: Random.date('yyyy-MM-dd HH:mm:ss')
         }
       }

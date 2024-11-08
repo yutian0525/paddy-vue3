@@ -118,12 +118,12 @@ export default {
           }
         ],
       }
-      console.log('ECharts Option:', option);
+     /* console.log('ECharts Option:', option);*/
       chart.setOption(option);
     },
     formatData(list) {
       return list.map(item => {
-        console.log('MapProvince:', item.name, 'MapPrecipitation:', item.value);
+       /* console.log('MapProvince:', item.name, 'MapPrecipitation:', item.value);*/
         return {
           name: item.name,
           value: parseFloat(item.value) // 将字符串转换为数值
