@@ -35,6 +35,12 @@ importers:
       sass:
         specifier: ^1.80.6
         version: 1.80.6
+      three:
+        specifier: 0.121.0
+        version: 0.121.0
+      vanta:
+        specifier: 0.5.24
+        version: 0.5.24
       vue:
         specifier: ^2.6.14
         version: 2.7.16
@@ -4644,6 +4650,9 @@ packages:
     peerDependencies:
       webpack: ^2.0.0 || ^3.0.0 || ^4.0.0
 
+  three@0.121.0:
+    resolution: {integrity: sha512-12bkOFsSCsfHViuqDuxDccMBT8eJ/UH829P1J50f4mvI9pWNX4iurZq8Vbo+rs9rKkgrSBRq7ubE77dQ1Y1hzA==}
+
   throttle-debounce@1.1.0:
     resolution: {integrity: sha512-XH8UiPCQcWNuk2LYePibW/4qL97+ZQ1AN3FNXwZRBNPPowo/NRU5fAlDCSNBJIYCKbioZfuYtMhG4quqoJhVzg==}
     engines: {node: '>=4'}
@@ -4899,6 +4908,9 @@ packages:
 
   validate-npm-package-license@3.0.4:
     resolution: {integrity: sha512-DpKm2Ui/xN7/HQKCtpZxoRWBhZ9Z0kqtygG8XCgNQ8ZlDnxuQmWhj566j8fN4Cu3/JmbhsDo7fcAJq4s9h27Ew==}
+
+  vanta@0.5.24:
+    resolution: {integrity: sha512-fvieEbHy1ZS23zrcX+topzqAgA4Uct1enngOEWLFBgs9TtOf6RDFOYatH7KSVdrABzQDMCQ5myQy+nTSZZwLzg==}
 
   vary@1.1.2:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
@@ -10595,6 +10607,8 @@ snapshots:
       neo-async: 2.6.2
       webpack: 4.47.0
 
+  three@0.121.0: {}
+
   throttle-debounce@1.1.0: {}
 
   through2@2.0.5:
@@ -10840,6 +10854,8 @@ snapshots:
     dependencies:
       spdx-correct: 3.2.0
       spdx-expression-parse: 3.0.1
+
+  vanta@0.5.24: {}
 
   vary@1.1.2: {}
 
