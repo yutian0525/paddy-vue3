@@ -1,4 +1,5 @@
 import axios from 'axios';
+import ElMessage from "@jiaminghi/data-view/deploy/plugin/print";
 
 export async function uploadImage(selectedImage) {
     try {

@@ -33,7 +33,7 @@ export default {
       minWidth: 200.0,
       scale: 1.0,
       scaleMobile: 1.0,
-      color: 0x1400,
+      color: 0x001f3f,
       shininess: 76.0,
       waveHeight: 12.0,
       waveSpeed: 0.95,

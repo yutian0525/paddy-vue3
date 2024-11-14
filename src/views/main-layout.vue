@@ -136,13 +136,6 @@
             <chart-card title="">
               <div slot="title" class="province-table-title flex">
                 最新农业消息
-                <el-link
-                  icon="el-icon-view"
-                  style="color: #bcbcbf; padding-left: 10px"
-                  :underline="false"
-                  @click="provinceTableDialogShowHandler"
-                  >详情</el-link
-                >
               </div>
                <dv-scroll-board
                   :config="provinceConfirmedCountBoardConfig"
@@ -156,18 +149,13 @@
     </div>
     <!-- 其他页面 -->
     <div class="province-data-table-wrapper">
-      <el-dialog
-        :visible.sync="provinceTableDialogVisible"
-        width="50%"
-        :before-close="provinceTableDialogClose"
-      >
+      
         <div slot="title" class="province-data-modal-title">
           <p>各省数据表</p>
           <span class="province-data-modal-update-time"
             >（更新时间：{{ basicData.updateTime }}）</span
           >
         </div>
-      </el-dialog>
     </div>
   </div>
 </template>
@@ -248,13 +236,10 @@ const initBasicConfig = (data) => {
 
 const initProvinceConfirmedCountBoardConfig = (resultList = []) => {
   return {
-    header: ['省份', '累计确诊', '累计治愈', '累计死亡'],
-    headerHeight: 30,
     data: resultList,
     align: ['center'],
     rowNum: 10,
-    index: true,
-    indexHeader: '排名',
+    index: false,
     headerBGC: '',
     oddRowBGC: '',
     evenRowBGC: '',
