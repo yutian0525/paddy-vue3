@@ -41,7 +41,7 @@
                       style="width: 100%; height: 120px"
                     />
                   </chart-card>
-                  <chart-card title="进出口额">
+                  <chart-card title="水稻进出口额">
                     <current-confirmed-compare-bar-chart
                       ref="importandexportBarChart"
                       :data="ImportAndExportChartData"
@@ -84,7 +84,7 @@
                       />
                       <!-- 死亡人数 -->
                       <basic-data-item-label
-                        label="农业进口"
+                        label="水稻进口"
                         :config="defaultDataConfig.agriculturalImports"
                         :inCrValue="basicData.agriculturalImportsIncr"
                       />

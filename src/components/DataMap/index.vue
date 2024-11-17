@@ -70,11 +70,11 @@ export default {
             color: 'rgba(255,255,255,0.51)'
           },
           pieces: [
-            {gt: 400, label: '> 400 mm', color: '#0A2C4C'},
-            {gte: 300, lte: 400, label: '300 - 400 mm', color: '#1E4D77'},
-            {gte: 200, lt: 300, label: '200 - 300 mm', color: '#336699'},
-            {gte: 100, lt: 200, label: '100 - 200 mm', color: '#6699CC'},
-            {gt: 0, lt: 100, label: '< 100 mm', color: '#99CCFF'},
+            {gt: 400, label: '> 400万吨', color: '#006400'},
+            {gte: 300, lte: 400, label: '300 - 400万吨', color: '#228B22'},
+            {gte: 200, lt: 300, label: '200 - 300万吨', color: '#808000'},
+            {gte: 100, lt: 200, label: '100 - 200万吨', color: '#7CFC00'},
+            {gt: 0, lt: 100, label: '< 100万吨', color: '#90EE90'},
           ],
           show: true,
         },

@@ -7,9 +7,8 @@ import axios from 'axios'
 import 'echarts-liquidfill'
 import VueRouter from 'vue-router'
 import router from './router/index'
-
 import { 
-  Icon, Row, Col,  Table, TableColumn, Button, Dialog, Link, Avatar
+  Icon, Row, Col, Table, TableColumn, Button, Dialog, Link, Avatar, Input
 } from 'element-ui';
 
 if (process.env.NODE_ENV === 'development') {
@@ -31,6 +30,7 @@ Vue.use(TableColumn)
 Vue.use(Button)
 Vue.use(Dialog)
 Vue.use(Link)
+Vue.use(Input) // 引入并注册 el-input 组件
 Vue.use(VueRouter)
 
 new Vue({

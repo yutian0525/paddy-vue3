@@ -7,7 +7,7 @@
 <script>
 import * as echarts from 'echarts'
 let chart = null
-export default {
+export default  {
   props: {
     title: String,
     data: Object

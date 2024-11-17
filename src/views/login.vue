@@ -4,7 +4,18 @@
 
     <div class="banner">
       <div class="box">
-        <h2>用户登录</h2>
+        <h2 class="banner-in-box">用户登录</h2>
+        <div class="username">
+          <el-input class="el-input" v-model="username" placeholder="用户名" >
+          </el-input>
+        </div>
+        <div class="password">
+          <el-input class="el-input" v-model="password" placeholder="密码" show-password>
+          </el-input>
+          </div>
+        <div>
+          <el-button type="primary" class="login-button" @click="handlelogin">登录</el-button>
+        </div>
       </div>
     </div>
   </div>
@@ -13,10 +24,27 @@
 <script>
 import * as THREE from "three";
 import WAVES from "vanta/src/vanta.waves";
+import { login } from "@/request/HttpApi";
 
 export default {
+  
   data() {
-    return {};
+    return {
+      username: "",
+      password: "",
+    };
+  },
+  methods: {
+    async handlelogin() {
+      const { username, password } = this;
+      const res = await login({ username, password });
+      if (res.code === 200) {
+        this.$message.success("登录成功");
+        await this.$router.push("/home");
+      } else {
+        this.$message.error("登录失败");
+      }
+    },
   },
   mounted() {
     this.vantaEffect = WAVES({
@@ -62,19 +90,58 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    .box{
+
+    .box {
       width: 400px;
       height: 500px;
       background-color: rgba(255, 255, 255, 0.25);
       border: #007157 solid 2px;
-      //filter: blur(10px);
       box-shadow: 0px 0px 10px #007157;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;  
+      padding-top: 20px;
+    }
+     .banner-in-box {
+      position: absolute;
+      top: 20px; /* 调整顶部距离 */
+      left: 50%;
+      transform: translateX(-50%); /* 水平居中 */
+      font-size: 24px;
+      margin: 0; /* 移除默认的 margin */
+    }
+
+    .username {
+      margin-top: 150px; /* 调整这个值以控制输入框与“用户登录”文本之间的间距 */
+      width: 300px;
+      height: 40px;
+      position: relative;
+      z-index: 1000; /* 确保在最上层 */
     }
   }
+  .password {
+    margin-top: 50px; /* 调整这个值以控制输入框与“用户登录”文本之间的间距 */
+      width: 300px;
+      height: 40px;
+      position: relative;
+      z-index: 1000; /* 确保在最上层 */
+  }
 }
-
+.el-input {
+  width: 100%;
+  height: 100%;
+  padding: 0 10px;
+  box-sizing: border-box;
+  z-index: 1001;
+  margin: 0;
+}
+.login-button {
+  margin-top: 50px; /* 调整这个值以控制输入框与“用户登录”文本之间的间距 */
+  position: relative;
+  z-index: 1000; /* 确保在最上层 */
+  background-color: #007157;
+}
 h1 {
   font-size: 66px;
 }
@@ -83,4 +150,5 @@ p {
   margin-top: 60px;
   font-size: 18px;
 }
+
 </style>
