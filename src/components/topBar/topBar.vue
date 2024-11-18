@@ -5,9 +5,9 @@
         <div class="grid-content bg-purple">
           <div class="left">
 <!--            <button class="btn btn&#45;&#45;stripe">数字大屏</button>-->
-            <button :class="(path === '/') ?'choosed' : 'btn btn--stripe'" @click="goto('/')">数字大屏</button>
+            <button :class="(path === '/') ?'choosed' : 'btn btn--stripe'" @click="goto('/')">首页</button>
             <button :class="(path === '/knowledge') ?'choosed' : 'btn btn--stripe'" @click="goto('/knowledge')">科普站</button>
-            <button :class="(path === '/predict') ?'choosed' : 'btn btn--stripe'" @click="goto('/predict')">智慧检测</button>
+            <button :class="(path === '/predict') ?'choosed' : 'btn btn--stripe'" @click="goto('/predict')">智慧农业</button>
           </div>
         </div>
       </el-col>

@@ -21,7 +21,7 @@
               <el-row>
                 <el-col :span="7">
                   <chart-card
-                    title="各省粮食产量排名（TOP 10）单位：万吨"
+                    title="各省水稻产量排名 单位：万吨 统计时间：2024年10月"
                     :customClass="`chart-item-bottom-sep`"
                   >
                     <province-ranking-bar-chart
@@ -30,9 +30,9 @@
                       style="width: 100%; height: 380px"
                     />
                   </chart-card>
-                  <!-- 占比 -->
+                  <!-- 人口 -->
                   <chart-card
-                    title="占比"
+                    title="人口"
                     :customClass="`chart-item-bottom-sep`"
                   >
                     <basic-proportion-chart
@@ -41,7 +41,7 @@
                       style="width: 100%; height: 120px"
                     />
                   </chart-card>
-                  <chart-card title="水稻进出口额">
+                  <chart-card title="水稻进出口交易动态">
                     <current-confirmed-compare-bar-chart
                       ref="importandexportBarChart"
                       :data="ImportAndExportChartData"
@@ -113,9 +113,9 @@
         <el-col :span="6">
           <!-- 右侧区域开始 -->
           <div class="main-right">
-            <!-- 农作物销售与库存情况 -->
+            <!-- 农业生态环境图 -->
             <chart-card
-              title="农作物销售与库存情况"
+              title="农业生态环境图（上海）"
               :innerClass="`import-and-export-rate-chart`"
               :customClass="`chart-item-bottom-sep`"
             >
@@ -126,7 +126,7 @@
                 style="width: 280px; height: 130px"
               />
             </chart-card>
-            <chart-card title="水热变化" :customClass="`chart-item-bottom-sep`">
+            <chart-card title="近期水热动态变化" :customClass="`chart-item-bottom-sep`">
               <basic-trend-chart
                 :data="TemperatureAndPerData"
                 ref="temandperTrendChart"
@@ -135,7 +135,7 @@
             </chart-card>
             <chart-card title="">
               <div slot="title" class="province-table-title flex">
-                最新农业消息
+                其他环境数据
               </div>
                <dv-scroll-board
                   :config="provinceConfirmedCountBoardConfig"

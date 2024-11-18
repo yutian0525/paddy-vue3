@@ -1,5 +1,6 @@
 <template>
-  <div ref="rateChart" style="width: 100%; height: 100%"></div>
+  <div ref="rateChart" style="width: 100%; height: 0"></div>
+<!--    <img src="https://mypan.yutiantian.top/raw/temp/temp.png" alt="" style="width: 900px;height: 600px;">-->
 </template>
 <script>
 let chart = null
@@ -245,7 +246,7 @@ export default {
           }
         }]
       };
-      // 
+      //
       chart.setOption(option)
     }
   },
