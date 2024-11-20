@@ -38,10 +38,13 @@ export async function predictImage(imgname) {
 export async function login(username, password) {
     console.log(username);
     console.log(password);
-/*    const userstr = JSON.stringify(username);
-    const passwordstr = JSON.stringify(password);*/
+    /*    const userstr = JSON.stringify(username);
+        const passwordstr = JSON.stringify(password);*/
     try {
-        const response = await axios.post('http://localhost:5000/userlogin', {username, password});
+        const response = await axios.post('http://localhost:5000/userlogin', {
+            username,
+            password
+        }, {withCredentials: true});
         console.log({username: username, password: password});
         console.log(response.data);
         return 200;
@@ -90,8 +93,7 @@ export function getTemperatureData(regionName, value1, yeardata, monthdata, dayd
 
 export async function register(username, password) {
     const userData = {
-        username: username, 
-        password: password
+        username: username, password: password
     };
     try {
         const response = await axios.post('http://localhost:5000/usersignup', userData, {
