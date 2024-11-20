@@ -39,7 +39,7 @@ export default {
       const res = await login(this.username,this.password);
       if (res === 200) {
         this.$message.success("登录成功");
-        await this.$router.push("/home");
+        await this.$router.push("/");
       } else {
         await this.$alert("登录失败");
       }
