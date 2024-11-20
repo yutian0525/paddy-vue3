@@ -23,6 +23,11 @@ const routes = [
     path: '/predict',
     name: 'predict',
     component: () => import('@/views/predict')
+  },
+  {
+    path:'/register'
+    ,name:'register'
+    ,component:()=>import('@/views/register')
   }
 ]
 

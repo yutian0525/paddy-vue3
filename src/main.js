@@ -10,7 +10,7 @@ import router from './router/index'
 import { 
   Icon, Row, Col, Table, TableColumn, Button, Dialog, Link, Avatar, Input
 } from 'element-ui';
-
+import ElementUI from 'element-ui';
 if (process.env.NODE_ENV === 'development') {
   const { initMockData } = require('../mock')
   initMockData()
@@ -32,7 +32,7 @@ Vue.use(Dialog)
 Vue.use(Link)
 Vue.use(Input) // 引入并注册 el-input 组件
 Vue.use(VueRouter)
-
+Vue.use(ElementUI)
 new Vue({
   router,
   render: h => h(App),

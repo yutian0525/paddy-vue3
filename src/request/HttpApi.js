@@ -1,5 +1,4 @@
 import axios from 'axios';
-import ElMessage from "@jiaminghi/data-view/deploy/plugin/print";
 
 export async function uploadImage(selectedImage) {
     try {
@@ -15,7 +14,7 @@ export async function uploadImage(selectedImage) {
         const imageUrl = "http://127.0.0.1:5000/ShowImg/GrowImage/" + response.data.data;
         const imgname = response.data.data;
         console.log(imageUrl);
-        return { imageUrl, imgname };
+        return {imageUrl, imgname};
     } catch (error) {
         console.error('Error uploading image:', error);
         throw error;
@@ -24,30 +23,34 @@ export async function uploadImage(selectedImage) {
 
 export async function predictImage(imgname) {
     try {
-        console.log({ imageid: imgname, modelid: "1" });
-        const response = await axios.post('http://localhost:5000/PredictImage', { imageid: imgname, modelid: "1" });
+        console.log({imageid: imgname, modelid: "1"});
+        const response = await axios.post('http://localhost:5000/PredictImage', {imageid: imgname, modelid: "1"});
 
         const imageUrl = "http://127.0.0.1:5000/ShowImg/PredictGrowImage/" + imgname;
         const result = response.data;
-        return { imageUrl, result };
+        return {imageUrl, result};
     } catch (error) {
         console.error('Error:', error);
         throw error;
     }
 }
+
 export async function login(username, password) {
     console.log(username);
     console.log(password);
-
+/*    const userstr = JSON.stringify(username);
+    const passwordstr = JSON.stringify(password);*/
     try {
-        const response = await axios.post('http://localhost:5000/userlogin', { username, password });
+        const response = await axios.post('http://localhost:5000/userlogin', {username, password});
+        console.log({username: username, password: password});
         console.log(response.data);
-        return response.data;
+        return 200;
     } catch (error) {
         console.error('Error:', error);
-        throw error;
+        return 500;
     }
 }
+
 export function getTemperatureData(regionName, value1, yeardata, monthdata, daydata, startyear, endyear) {
     let location = null;
     switch (regionName) {
@@ -80,42 +83,35 @@ export function getTemperatureData(regionName, value1, yeardata, monthdata, dayd
         formData.end = endyear;
         const startYearNumber = startyear.getFullYear();
         const endYearNumber = endyear.getFullYear();
-        formData.xData = Array.from({ length: endYearNumber - startYearNumber + 1 }, (_, i) => i + startYearNumber);
+        formData.xData = Array.from({length: endYearNumber - startYearNumber + 1}, (_, i) => i + startYearNumber);
     }
     return formData;
 }
-export async function register(username, password, confirmpassword, router) {
+
+export async function register(username, password) {
     const userData = {
-        username: username,
+        username: username, 
         password: password
     };
-
-    if (password !== confirmpassword) {
-        ElMessage.error('两次密码输入不一致，请重新输入!');
-    } else {
-        try {
-            const response = await axios.post('http://localhost:5000/usersignup', userData, {
-                headers: {
-                    'Content-Type': 'application/json; charset=utf-8'
-                }
-            });
-            console.log(response.data);
-            if (response.status == 400) {
-                ElMessage.error('用户名已存在，请重新输入!');
+    try {
+        const response = await axios.post('http://localhost:5000/usersignup', userData, {
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8'
             }
-            if (response.status == 200) {
-                console.log(response.data);
-                ElMessage({
-                    message: '注册成功!',
-                    type: 'success',
-                });
-                router.push('/Loginpage');
-            }
-        } catch (error) {
-            console.error('Error:', error);
+        });
+        console.log(response.data);
+        if (response.status == 400) {
+            return 400
         }
+        if (response.status == 200) {
+            console.log(response.data);
+            return 200
+        }
+    } catch (error) {
+        console.error('Error:', error);
     }
 }
+
 export async function uploadUserImage(selectedImage, userId) {
     console.log(selectedImage);
     try {

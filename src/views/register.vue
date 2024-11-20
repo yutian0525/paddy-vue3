@@ -4,7 +4,7 @@
 
     <div class="banner">
       <div class="box">
-        <h2 class="banner-in-box">用户登录</h2>
+        <h2 class="banner-in-box">用户注册</h2>
         <div class="username">
           <el-input class="el-input" v-model="username" placeholder="用户名" >
           </el-input>
@@ -13,8 +13,12 @@
           <el-input class="el-input" v-model="password" placeholder="密码" show-password>
           </el-input>
           </div>
+        <div class="password">
+          <el-input class="el-input" v-model="confirmpassword" placeholder="确认密码" show-password>
+          </el-input>
+        </div>
         <div>
-          <el-button type="primary" class="login-button" @click="handlelogin">登录</el-button>
+          <el-button type="primary" class="login-button" @click="handelregister">注册</el-button>
         </div>
       </div>
     </div>
@@ -24,7 +28,7 @@
 <script>
 import * as THREE from "three";
 import WAVES from "vanta/src/vanta.waves";
-import { login } from "@/request/HttpApi";
+import { register } from "@/request/HttpApi";
 
 export default {
   
@@ -32,18 +36,30 @@ export default {
     return {
       username: "",
       password: "",
+      confirmpassword: "",
     };
   },
   methods: {
-    async handlelogin() {
-      const res = await login(this.username,this.password);
-      if (res === 200) {
-        this.$message.success("登录成功");
-        await this.$router.push("/home");
-      } else {
-        await this.$alert("登录失败");
+    async handelregister() {
+      const { username, password, confirmpassword } = this;
+      if (password !== confirmpassword) {
+        await this.$alert("两次密码不一致");
+        return;
       }
-    },
+      const res = await register(username, password);
+      if (res === 200) {
+        await this.$alert('注册成功', '提示', {
+          confirmButtonText: '确定',
+          callback: action => {
+            this.$router.push("/login");
+          }
+        });
+      } else {
+        await this.$alert('注册失败', '提示', {
+          confirmButtonText: '返回',
+        });
+     }
+    }
   },
   mounted() {
     this.vantaEffect = WAVES({
