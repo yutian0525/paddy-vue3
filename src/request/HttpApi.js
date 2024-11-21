@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import { keccak256 } from 'js-sha3';
 export async function uploadImage(selectedImage) {
     try {
         const formData = new FormData();
@@ -35,11 +35,12 @@ export async function predictImage(imgname) {
     }
 }
 
-export async function login(username, password) {
+export async function login(username, password2) {
     console.log(username);
-    console.log(password);
+    const password = keccak256(password2);
     /*    const userstr = JSON.stringify(username);
         const passwordstr = JSON.stringify(password);*/
+    
     try {
         const response = await axios.post('http://localhost:5000/userlogin', {
             username,
@@ -92,8 +93,9 @@ export function getTemperatureData(regionName, value1, yeardata, monthdata, dayd
 }
 
 export async function register(username, password) {
+    const hashedPassword = keccak256(password);
     const userData = {
-        username: username, password: password
+        username: username, password: hashedPassword
     };
     try {
         const response = await axios.post('http://localhost:5000/usersignup', userData, {
