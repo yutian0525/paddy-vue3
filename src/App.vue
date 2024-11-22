@@ -7,20 +7,19 @@
         </template>
       </topBar>
     </el-header>
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-    <router-view></router-view>
+    <transition name="fade" mode="out-in">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
 <script>
-
 import TopBar from "./components/topBar/topBar.vue";
 
 export default {
   name: 'App',
   components: {
     TopBar
-    // DataV
   }
 }
 </script>
@@ -39,5 +38,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #BCBCBF;
+}
+
+/* 定义过渡效果的 CSS 样式 */
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.15s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+  opacity: 0;
 }
 </style>

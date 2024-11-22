@@ -14,7 +14,8 @@
           </el-input>
           </div>
         <div>
-          <el-button type="primary" class="login-button" @click="handlelogin">登录</el-button>
+          <el-button type="primary" class="button" @click="handlelogin">登录</el-button>
+          <el-button type="primary" class="button" @click="jumptoregister">注册</el-button>
         </div>
       </div>
     </div>
@@ -44,6 +45,9 @@ export default {
         await this.$alert("登录失败");
       }
     },
+    async jumptoregister(){
+      await this.$router.push("/register")
+    }
   },
   mounted() {
     this.vantaEffect = WAVES({
@@ -135,7 +139,7 @@ export default {
   z-index: 1001;
   margin: 0;
 }
-.login-button {
+.button {
   margin-top: 50px; /* 调整这个值以控制输入框与“用户登录”文本之间的间距 */
   position: relative;
   z-index: 1000; /* 确保在最上层 */
