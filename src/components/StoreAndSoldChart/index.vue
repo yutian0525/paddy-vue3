@@ -68,7 +68,7 @@ export default {
             top: 'middle',
             style: {
               fill: '#aab2fa',
-              text: '销售率',
+              text: '城镇化率',
               font: '16px Microsoft YaHei'
             }
           }]
@@ -83,7 +83,7 @@ export default {
             top: 'middle',
             style: {
               fill: '#aab2fa',
-              text: '库存率',
+              text: '粮食自给率',
               font: '16px Microsoft YaHei'
             }
           }]

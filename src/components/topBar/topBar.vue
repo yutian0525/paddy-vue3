@@ -15,7 +15,7 @@
 
             <div class="login-header">
               <!--              <img class="logo mr10" src="../assets/star.svg" alt="" />-->
-              <div class="login-title">全国农业大数据平台</div>
+              <div class="login-title">水稻全生长期智能监测平台</div>
             </div>
       </el-col>
       <el-col :span="8">

@@ -12,7 +12,7 @@
 <!--      </div>-->
     </div>
     <div class="main-content">
-      <el-row>
+      <el-row style="width: 100%; max-width: 1920px;"> <!-- 添加最大宽度并确保占据100%宽度 -->
         <el-col :span="18">
           <!-- 中间信息开始 -->
           <div class="statistics-content">
@@ -32,7 +32,7 @@
                   </chart-card>
                   <!-- 人口 -->
                   <chart-card
-                    title="人口"
+                    title="农业信息"
                     :customClass="`chart-item-bottom-sep`"
                   >
                     <basic-proportion-chart
@@ -259,7 +259,7 @@ export default {
   },
   data () {
     return {
-      title: '全国农业大数据平台',
+      title: '水稻全生长期智能监测平台',
       provinceTableDialogVisible: false,
       aboutDialogVisible: false,
       commonData: {},
@@ -535,6 +535,12 @@ h1 {
 .flex {
   display: flex;
 }
+.main-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%; /* 确保 main-content 占据全部宽度 */
+}
 .top-header {
   position: relative;
   margin-bottom: 10px;
@@ -563,6 +569,7 @@ h1 {
   width: 99%;
   height: 840px;
   padding: 20px 10px 10px 10px;
+  margin: 0 auto; /* 添加水平居中 */
 }
 .province-scroll-board-wrapper {
   padding-top: 10px;
@@ -606,8 +613,13 @@ h1 {
   display: flex;
   justify-content: space-around;
 }
+.basic-header {
+  display: flex;
+  justify-content: center; /* 添加水平居中 */
+}
 .top-basic-info {
   display: flex;
+  flex-wrap: wrap;
 }
 .dv-scroll-ranking-board .ranking-column .inside-column {
   background: linear-gradient(90deg, #29bfff, #a231ff, #0deccd, #29bfff);

@@ -1,17 +1,35 @@
 import axios from 'axios';
 import { keccak256 } from 'js-sha3';
+import userStore from '@/utils/userStore';
+
+// 响应拦截器：处理认证失败
+axios.interceptors.response.use(
+  response => response,
+  error => {
+    if (error.response && error.response.status === 401) {
+      // 认证失败，清除本地用户信息并跳转到登录页
+      userStore.clearUser();
+      // 如果当前页面不是登录页，则跳转到登录页
+      if (window.location.pathname !== '/login') {
+        window.location.href = '/login';
+      }
+    }
+    return Promise.reject(error);
+  }
+);
 export async function uploadImage(selectedImage) {
     try {
         const formData = new FormData();
         formData.append('file', selectedImage);
 
-        const response = await axios.post('http://127.0.0.1:5000/grow_image', formData, {
+        const response = await axios.post('http://localhost:8082/grow_image/', formData, {
+            withCredentials: true, // 携带cookies进行鉴权
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
         });
 
-        const imageUrl = "http://127.0.0.1:5000/ShowImg/GrowImage/" + response.data.data;
+        const imageUrl = "http://localhost:8082/ShowImg/GrowImage/" + response.data.data;
         const imgname = response.data.data;
         console.log(imageUrl);
         return {imageUrl, imgname};
@@ -24,9 +42,14 @@ export async function uploadImage(selectedImage) {
 export async function predictImage(imgname) {
     try {
         console.log({imageid: imgname, modelid: "1"});
-        const response = await axios.post('http://localhost:5000/PredictImage', {imageid: imgname, modelid: "1"});
+        const response = await axios.post('http://localhost:8082/PredictImage', {imageid: imgname, modelid: "1"}, {
+            withCredentials: true, // 携带cookies进行鉴权
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
 
-        const imageUrl = "http://127.0.0.1:5000/ShowImg/PredictGrowImage/" + imgname;
+        const imageUrl = "http://localhost:8082/ShowImg/PredictGrowImage/" + imgname;
         const result = response.data;
         return {imageUrl, result};
     } catch (error) {
@@ -38,20 +61,69 @@ export async function predictImage(imgname) {
 export async function login(username, password2) {
     console.log(username);
     const password = keccak256(password2);
-    /*    const userstr = JSON.stringify(username);
-        const passwordstr = JSON.stringify(password);*/
     
     try {
-        const response = await axios.post('http://localhost:5000/userlogin', {
+        // 修正端口为Go服务器端口（通常是8080或8082）
+        const response = await axios.post('http://localhost:8082/userlogin', {
             username,
             password
-        }, {withCredentials: true});
+        }, {
+            withCredentials: true, // 允许携带cookies
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        
         console.log({username: username, password: password});
         console.log(response.data);
+        
+        // 如果登录成功，存储用户信息到localStorage（可选）
+        if (response.data.code === "200") {
+            localStorage.setItem('user', JSON.stringify({
+                id: response.data.id,
+                username: response.data.username,
+                imgurl: response.data.imgurl
+            }));
+        }
+        
         return 200;
     } catch (error) {
         console.error('Error:', error);
         return 500;
+    }
+}
+
+// 退出登录
+export async function logout() {
+    try {
+        const response = await axios.post('http://localhost:8082/userlogout', {}, {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        
+        // 清除本地存储的用户信息
+        localStorage.removeItem('user');
+        
+        return response.data;
+    } catch (error) {
+        console.error('Logout error:', error);
+        throw error;
+    }
+}
+
+// 检查登录状态（可选实现）
+export async function checkAuthStatus() {
+    try {
+        // 这里可以添加一个专门的接口来检查当前登录状态
+        // 暂时通过请求受保护的资源来检查
+        const response = await axios.get('http://localhost:8082/protected-route', {
+            withCredentials: true
+        });
+        return response.status === 200;
+    } catch (error) {
+        return false;
     }
 }
 
@@ -123,7 +195,8 @@ export async function uploadUserImage(selectedImage, userId) {
         formData.append('file', selectedImage);
         formData.append('userid', userId);
 
-        const response = await axios.post('http://127.0.0.1:5000/UploadUserImage', formData, {
+        const response = await axios.post('http://localhost:8082/UploadUserImage', formData, {
+            withCredentials: true, // 携带cookies进行鉴权
             headers: {
                 'Content-Type': 'multipart/form-data'
             }

@@ -1,9 +1,8 @@
 let baseUrl = ''
 if (process.env.NODE_ENV === 'development') {
-  baseUrl = ''
+  baseUrl = 'http://127.0.0.1:5000'
 } else {
-  // 你的 API 地址
-  baseUrl = ''
+  baseUrl = '' 
 }
 
 export default {

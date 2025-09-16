@@ -5,7 +5,7 @@ import {ElMessage} from "element-plus";
 // 基本配置
 const instance = axios.create({
     // baseURL: 'https://healthback.yutiantian.top/', // 根据实际情况修改API地址
-    baseURL: 'http://127.0.0.1:8000/', // 根据实际情况修改API地址
+    baseURL: 'http://127.0.0.1:5000/', // 根据实际情况修改API地址
     timeout: 5000 // 设置超时时间，单位为ms
 });
 
