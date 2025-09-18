@@ -23,12 +23,12 @@
 </template>
 
 <script>
+import { login } from "@/request/HttpApi";
 import * as THREE from "three";
 import WAVES from "vanta/src/vanta.waves";
-import { login } from "@/request/HttpApi";
 
 export default {
-  
+
   data() {
     return {
       username: "",
@@ -39,23 +39,21 @@ export default {
     async handlelogin() {
       try {
         const res = await login(this.username, this.password);
-        if (res === 200) {
+        // HttpApi.js 中的 login 函数现在只在成功时返回 200，失败时会抛出错误
+        if (res && res.code === '200') {
           this.$message.success("登录成功");
-          
-          // 等待一小段时间确保localStorage和cookie都已设置
-          await new Promise(resolve => setTimeout(resolve, 100));
-          
+
           // 登录成功后跳转到原来要访问的页面，或首页
           const redirect = this.$route.query.redirect || '/';
-          
+
           // 使用replace而不是push，避免在历史记录中留下登录页
           await this.$router.replace(redirect);
-        } else {
-          this.$message.error("登录失败，请检查用户名和密码");
         }
+        // 错误情况由 catch 块处理
       } catch (error) {
         console.error('Login error:', error);
-        this.$message.error("登录出现错误，请稍后重试");
+        // error.message 是由 HttpApi.js 中 reject(new Error(...)) 传递过来的
+        this.$message.error(error.message || "登录出现错误，请稍后重试");
       }
     },
     async jumptoregister(){
@@ -63,22 +61,6 @@ export default {
     }
   },
   async mounted() {
-    // 检查是否已经登录（通过cookie自动登录）
-    const user = localStorage.getItem('user');
-    if (user) {
-      // 如果本地存储有用户信息，可以直接跳转或验证token有效性
-      try {
-        // 这里可以添加一个验证token的接口调用
-        // const isValid = await checkAuthStatus();
-        // if (isValid) {
-        //   this.$router.push("/");
-        //   return;
-        // }
-      } catch (error) {
-        // token无效，清除本地存储
-        localStorage.removeItem('user');
-      }
-    }
     this.vantaEffect = WAVES({
       el: this.$refs.vantaRef,
       THREE: THREE,
@@ -132,7 +114,7 @@ export default {
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
-      align-items: center;  
+      align-items: center;
       padding-top: 20px;
     }
      .banner-in-box {

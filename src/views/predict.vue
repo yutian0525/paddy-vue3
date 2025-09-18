@@ -6,7 +6,8 @@
         <el-upload
           class="upload-box"
           drag
-          action="http://127.0.0.1:5000/DiseaseImage"
+          action="http://127.0.0.1:8082/DiseaseImage"
+          :headers="uploadHeaders"
           :on-success="handleDiseaseUploadSuccess"
           :on-error="handleUploadError"
           :before-upload="beforeImageUpload"
@@ -40,7 +41,8 @@
         <el-upload
           class="upload-box"
           drag
-          action="http://127.0.0.1:5000/grow_image/"
+          action="http://127.0.0.1:8082/grow_image/"
+          :headers="uploadHeaders"
           :on-success="handleGrowUploadSuccess"
           :on-error="handleUploadError"
           :before-upload="beforeImageUpload"
@@ -71,9 +73,9 @@
  </template>
 
  <script>
- import { Message } from 'element-ui'; // 引入 Message 组件
  import { post } from '@/utils/request'; // 引入 post 方法
- 
+import { Message } from 'element-ui'; // 引入 Message 组件
+
  export default {
    components: {
    },
@@ -84,10 +86,23 @@
        diseaseImageId: '', // 用于存储上传成功的疾病图片文件名
        diseasePredictionResult: '', // 用于存储预测结果
        growImageId: '', // 用于存储上传成功的成长期图片文件名
-       growPredictionResult: '' // 用于存储预测结果
+       growPredictionResult: '', // 用于存储预测结果
+       uploadHeaders: {} // 新增：用于存放上传请求头
      };
    },
+   created() {
+    // 在组件创建时设置请求头
+    this.setUploadHeaders();
+   },
    methods: {
+    setUploadHeaders() {
+      const token = localStorage.getItem('token');
+      if (token) {
+        this.uploadHeaders = {
+          'Authorization': `Bearer ${token}`
+        };
+      }
+    },
      handleDiseaseUploadSuccess(response, file, fileList) {
        console.log('疾病检测图片上传成功:', response);
        if (response && response.data) {
@@ -166,7 +181,11 @@
          }
 
          // Check and display the result field
-         if (predictionData && predictionData.data && predictionData.data.result !== undefined) {
+         if (predictionData && predictionData.result !== undefined) {
+            this.growPredictionResult = predictionData.result;
+            Message.success('成长期预测成功！');
+            console.log('成长期预测 - 成功显示结果:', this.growPredictionResult);
+         } else if (predictionData && predictionData.data && predictionData.data.result !== undefined) {
             this.growPredictionResult = predictionData.data.result;
             Message.success('成长期预测成功！');
             console.log('成长期预测 - 成功显示结果:', this.growPredictionResult);
@@ -212,7 +231,13 @@
         console.log('疾病检测响应数据:', response); // 修改日志，检查 response 本身的数据
 
         let predictionData = null;
-        if (typeof response === 'string') { // 首先尝试将 response 本身作为 base64 字符串处理
+        if (typeof response === 'object' && response !== null && response.names) {
+          // response 本身就是我们需要的对象
+          predictionData = {
+            data: response
+          };
+          console.log('疾病检测响应本身就是所需对象:', response);
+        } else if (typeof response === 'string') { // 尝试将 response 本身作为 base64 字符串处理
           try {
             // 解码 base64 字符串
             const decodedString = atob(response);
@@ -251,8 +276,16 @@
         console.log('疾病检测 - 最终 predictionData:', predictionData);
         console.log('疾病检测 - 最终 predictionData.data:', predictionData ? predictionData.data : 'predictionData is null/undefined');
 
-        // 检查并显示预测结果
-        if (predictionData && predictionData.data) {
+        // 详细输出 predictionData 结构，辅助调试
+        console.log('预测数据结构检查 - 完整对象:', predictionData);
+        console.log('预测数据类型:', typeof predictionData);
+        console.log('预测数据 data 字段:', predictionData ? predictionData.data : 'predictionData 是 null/undefined');
+        console.log('预测数据 names 字段:', predictionData ? predictionData.names : 'predictionData 是 null/undefined');
+        console.log('预测数据 data.names 字段:', predictionData && predictionData.data ? predictionData.data.names : 'predictionData.data 不存在');
+
+        // 检查并显示预测结果 - 兼容多种数据结构
+        if ((predictionData && predictionData.names) ||
+            (predictionData && predictionData.data && predictionData.data.names)) {
           let resultMessage = '预测结果：\n';
           const diseaseNamesMap = {
             "blasst": "稻瘟病",
@@ -268,8 +301,8 @@
           };
 
           // 处理病害名称并过滤掉“未检测到”和“正常”
-          if (predictionData.data.names) {
-            const translatedNames = Object.values(predictionData.data.names)
+          if (predictionData.names) {
+            const translatedNames = Object.values(predictionData.names)
               .map(name => diseaseNamesMap[name] || name)
               .filter(name => name !== "未检测到" && name !== "正常");
 

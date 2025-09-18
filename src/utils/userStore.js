@@ -11,24 +11,31 @@ export const userStore = {
     localStorage.setItem('user', JSON.stringify(userInfo));
   },
 
-  // 清除用户信息
+  // 清除用户信息和Token
   clearUser() {
     localStorage.removeItem('user');
-    console.log('清除用户信息');
+    localStorage.removeItem('token');
+    console.log('已清除用户信息和Token');
   },
 
-  // 检查是否已登录（简化版）
+  // 检查是否已登录（基于Token）
   isLoggedIn() {
-    // 首先检查localStorage中是否有用户信息
+    const token = localStorage.getItem('token');
     const user = this.getCurrentUser();
-    console.log('检查登录状态 - 用户信息:', user);
-    
-    if (!user) {
-      console.log('localStorage中没有用户信息，用户未登录');
+    console.log(
+      '检查登录状态 - Token:',
+      token ? '存在' : '不存在',
+      '| 用户信息:',
+      user ? '存在' : '不存在'
+    );
+
+    // 黄金标准：必须有Token
+    if (!token) {
+      console.log('localStorage中没有Token，用户未登录');
       return false;
     }
 
-    console.log('用户已登录:', user.username);
+    console.log('用户已登录');
     return true;
   },
 
@@ -59,11 +66,9 @@ export const userStore = {
   // 调试用：完全清除登录状态
   forceLogout() {
     console.log('强制退出登录');
-    this.clearUser();
-    // 清除所有相关的cookie（如果需要的话）
-    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
+    this.clearUser(); // 调用已更新的clearUser
     console.log('已清除所有登录状态');
-  }
+  },
 };
 
 // 导出默认对象
